@@ -1,1 +1,6 @@
 .vagrant
+.bash_history
+.gem
+.bundle
+.cache
+vendor
