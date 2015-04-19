@@ -1,11 +1,20 @@
+PATH
+  remote: .
+  specs:
+    learnyoudocker (0.0.7)
+      highline
+      serverspec
+
 GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.2.5)
+    highline (1.7.1)
     multi_json (1.11.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.2)
+    rake (10.4.2)
     rspec (3.2.0)
       rspec-core (~> 3.2.0)
       rspec-expectations (~> 3.2.0)
@@ -35,4 +44,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  serverspec
+  learnyoudocker!
+  rake
