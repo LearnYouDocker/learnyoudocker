@@ -17,4 +17,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rake"
   s.add_runtime_dependency "serverspec"
   s.add_runtime_dependency "highline"
+  s.add_runtime_dependency "docker-api"
 end
