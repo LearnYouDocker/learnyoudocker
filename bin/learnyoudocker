@@ -4,19 +4,56 @@ require 'github/markdown'
 
 CHALLENGE_DIR = '../challenges'
 
-def print_challenge_description challenge
-  File.open("#{CHALLENGE_DIR}/#{challenge}/ChallengeDescription", "rb").read
+@current_challenge = ''
+
+$terminal.wrap_at = 80
+$terminal.page_at = 22
+
+def clear
+  system "clear" or system "cls"
+end
+
+def print_challenge_description
+  clear
+  say(File.open("#{CHALLENGE_DIR}/#{@current_challenge}/ChallengeDescription", "rb").read)
+end
+
+def test_challenge
+  clear
+  say('Not yet implemented')
+end
+
+def get_next_action
+  loop do
+    say("Current Challenge: #{@current_challenge.slice(@current_challenge.index("-")+1..-1)}")
+    choose do |menu|
+      menu.layout = :menu_only
+      menu.shell  = true
+
+      menu.choice(:display, "Display challenge text.") { print_challenge_description }
+      menu.choice(:test, "Run the challenge tests.") { test_challenge }
+      menu.choice(:menu, "Return to challenge menu.") { challenge_menu }
+      menu.choice(:quit, "Exit program.") { exit }
+    end
+  end
 end
 
 def challenge_menu
+  clear
   challenge_list = Dir.entries(CHALLENGE_DIR).select {|entry| File.directory? File.join(CHALLENGE_DIR,entry) and !(entry =='.' || entry == '..') }
   choose do |menu|
-      menu.prompt = "What challenge would you like to work on?  "
+      menu.prompt = "What challenge would you like to work on?"
 
       for challenge in challenge_list
         challenge_name = challenge.slice(challenge.index("-")+1..-1)
-        menu.choice(challenge_name) { say(print_challenge_description challenge) }
+        menu.choice(challenge_name) { 
+          @current_challenge = challenge
+          print_challenge_description
+          get_next_action
+        }
       end
+
+      menu.choice(:quit) { exit }
     end
 end
 
