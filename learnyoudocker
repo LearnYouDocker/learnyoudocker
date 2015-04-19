@@ -3,13 +3,20 @@
 require 'highline/import'
 require 'github/markdown'
 
-challenge_list = Dir.entries('./challenges').select {|entry| File.directory? File.join('./challenges',entry) and !(entry =='.' || entry == '..') }
+def print_challenge_description challenge
+  File.open("./challenges/#{challenge}/ChallengeDescription", "rb").read
+end
 
-choose do |menu|
-    menu.prompt = "What challenge would you like to work on?  "
+def challenge_menu
+  challenge_list = Dir.entries('./challenges').select {|entry| File.directory? File.join('./challenges',entry) and !(entry =='.' || entry == '..') }
+  choose do |menu|
+      menu.prompt = "What challenge would you like to work on?  "
 
-    for challenge in challenge_list
-      challenge_name = challenge.slice(challenge.index("-")+1..-1)
-      menu.choice(challenge_name) { say(File.open("./challenges/#{challenge}/ChallengeDescription", "rb").read) }
+      for challenge in challenge_list
+        challenge_name = challenge.slice(challenge.index("-")+1..-1)
+        menu.choice(challenge_name) { say(print_challenge_description challenge) }
+      end
     end
-  end
+end
+
+challenge_menu
