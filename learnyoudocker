@@ -1,5 +1,14 @@
 #!/usr/bin/env ruby
 
+require 'highline/import'
+
 challenge_list = Dir.entries('./challenges').select {|entry| File.directory? File.join('./challenges',entry) and !(entry =='.' || entry == '..') }
 
-puts challenge_list
+choose do |menu|
+    menu.prompt = "What challenge would you like to work on?  "
+
+    for challenge in challenge_list
+      challenge = challenge.slice(challenge.index("-")+1..-1)
+      menu.choice(challenge) { say("Good choice!") }
+    end
+  end
