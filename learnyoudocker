@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+challenge_list = Dir.entries('./challenges').select {|entry| File.directory? File.join('./challenges',entry) and !(entry =='.' || entry == '..') }
+
+puts challenge_list
