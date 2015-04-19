@@ -9,11 +9,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
   config.ssh.username = "vagrant"
 
-  # config.vm.synced_folder ".", "/vagrant", disabled: true
-  config.vm.synced_folder "challenges/", "/home/vagrant/challenges"
-
-  config.vm.provision "file", source: "learnyoudocker", destination: "/home/vagrant/learnyoudocker"
-
   if Dir.glob("#{File.dirname(__FILE__)}/.vagrant/machines/default/*/id").empty?
     # Install Docker
     pkg_cmd = "wget -q -O - https://get.docker.io/gpg | apt-key add -;" \
